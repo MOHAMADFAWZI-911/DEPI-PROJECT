@@ -84,23 +84,20 @@ The application consists of:
 
 ## ⚙️ Setup Instructions
 
-### 1. Clone Repository
+### 1. Prerequisites
+Ensure you have the following installed on your machine or server:
+* **Docker**
+* **Docker Compose**
+
+### 2. Clone Repository
 ```bash
 git clone https://github.com/MOHAMADFAWZI-911/DEPI-PROJECT.git
 cd DEPI-PROJECT
 ```
 
-### 2. Build and Run Containers
+### 3. Build and Run Containers
 ```bash
-docker build -t url-shortener-app .
-docker run -d -p 5000:5000 url-shortener-app
-```
-
-### 3. Run Prometheus and Grafana
-```bash
-docker network create monitoring
-docker run -d --name=prometheus --network=monitoring -p 9090:9090 prom/prometheus
-docker run -d --name=grafana --network=monitoring -p 3000:3000 grafana/grafana
+docker-compose up --build -d
 ```
 
 Then configure **Prometheus data source** in Grafana.
