@@ -2,6 +2,7 @@ import sqlite3
 import string
 import random
 import os
+import db
 # تم إضافة render_template هنا لكي نتمكن من عرض ملف الـ HTML
 from flask import Flask, request, redirect, Response, jsonify, render_template
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
