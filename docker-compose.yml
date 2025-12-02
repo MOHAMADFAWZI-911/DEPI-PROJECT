@@ -1,0 +1,42 @@
+version: '3.8'
+
+services:
+  url-shortener-app:
+    build: .
+    container_name: url-shortener-app
+    ports:
+      - "5000:5000"
+    volumes:
+      # الاحتفاظ بقاعدة البيانات في المجلد الرئيسي
+      - ./data/urls.db:/app/urls.db 
+    networks:
+      - monitoring
+
+  prometheus:
+    image: prom/prometheus
+    container_name: prometheus
+    volumes:
+      # تعديل المسار ليقرأ من مجلد monitoring
+      - ./monitoring/prometheus/prometheus.yml:/etc/prometheus/prometheus.yml
+    ports:
+      - "9090:9090"
+    networks:
+      - monitoring
+
+  grafana:
+    image: grafana/grafana
+    container_name: grafana
+    ports:
+      - "3000:3000"
+    networks:
+      - monitoring
+    volumes:
+      # (اختياري) لحفظ إعدادات جرافانا حتى لو قفلت الكونتينر
+      - grafana-storage:/var/lib/grafana
+
+networks:
+  monitoring:
+    driver: bridge
+
+volumes:
+  grafana-storage:
