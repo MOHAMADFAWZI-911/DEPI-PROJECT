@@ -2,7 +2,8 @@ import sqlite3
 import string
 import random
 import os
-from flask import Flask, request, redirect, Response, jsonify
+# تم إضافة render_template هنا لكي نتمكن من عرض ملف الـ HTML
+from flask import Flask, request, redirect, Response, jsonify, render_template
 from prometheus_client import Counter, generate_latest, CONTENT_TYPE_LATEST
 
 app = Flask(__name__)
@@ -45,6 +46,12 @@ def get_db_connection():
     return conn
 
 # --- Routes ---
+
+# === هذا هو التعديل الجديد للفرونت إند ===
+@app.route('/')
+def home():
+    # يبحث فلاسك تلقائياً عن هذا الملف داخل مجلد templates
+    return render_template('index.html') 
 
 @app.route('/health')
 def health():
@@ -99,4 +106,4 @@ def redirect_to_url(short_code):
         return jsonify({"error": "URL not found"}), 404
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=5000)
+    app.run(host='0.0.0.0', port=50
